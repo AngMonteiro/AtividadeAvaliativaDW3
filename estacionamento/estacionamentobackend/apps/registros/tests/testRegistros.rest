@@ -1,0 +1,49 @@
+### Necessário para pegar o token
+# @name loginAutenticado
+POST http://localhost:41000/Login HTTP/1.1
+content-type: application/json
+
+{
+  "username": "qwe",
+  "password": "qwe"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.$.token}}
+
+### registrar entrada (horaentrada vazia = agora)
+POST http://localhost:41000/insertRegistro HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "veiculoid": 1
+}
+
+### buscar todos os registros
+GET http://localhost:41000/getAllRegistros HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+### buscar registro por ID
+GET http://localhost:41000/getRegistroByID/1 HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+### atualizar registro
+PUT http://localhost:41000/updateRegistro/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "veiculoid": 1,
+  "horaentrada": "2026-10-20T10:00:00-03:00",
+  "horasaida": "2026-10-20T12:30:00-03:00",
+  "valor": 24.00
+}
+
+### registrar saída agora (calcula o valor)
+PUT http://localhost:41000/registrarSaida/1 HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+### remover registro (soft delete)
+DELETE http://localhost:41000/deleteRegistro/1 HTTP/1.1
+Authorization: Bearer {{accessToken}}

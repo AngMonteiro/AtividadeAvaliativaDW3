@@ -1,0 +1,56 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  <header class="page-header">
+    <p class="page-kicker text-primary fw-semibold mb-2">Sistema administrativo</p>
+    <h1 class="display-6 fw-bold mb-2">Painel principal</h1>
+    <p class="text-secondary mb-0">Acompanhe os veículos no pátio e registre entradas e saídas.</p>
+  </header>
+
+  <div id="homeDados" data-servidor-api="{{ servidorApi }}">
+    <div class="row g-3 mb-4">
+      <div class="col-12 col-md-4">
+        <div class="card page-card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <p class="text-secondary mb-1">No pátio agora</p>
+            <p class="display-5 fw-bold mb-0" id="qtdNoPatio">-</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card page-card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <p class="text-secondary mb-1">Saídas registradas</p>
+            <p class="display-5 fw-bold mb-0" id="qtdSaidas">-</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="card page-card border-0 shadow-sm h-100">
+          <div class="card-body p-4">
+            <p class="text-secondary mb-1">Veículos cadastrados</p>
+            <p class="display-5 fw-bold mb-0" id="qtdVeiculos">-</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="homeAlert" class="alert alert-danger d-none" role="alert"></div>
+  </div>
+
+  <div class="hero-card card border-0 shadow-sm">
+    <div class="card-body p-4 p-lg-5">
+      <div class="row g-3 align-items-center">
+        <div class="col-lg-6">
+          <h2 class="h4 fw-semibold mb-2">O que deseja fazer?</h2>
+          <p class="text-secondary mb-0">Inclua um novo veículo ou consulte as entradas e saídas.</p>
+        </div>
+        <div class="col-lg-6 d-flex flex-column flex-sm-row gap-2 justify-content-lg-end">
+          <a class="btn btn-primary btn-lg" href="/veiculos/form?oper=Cr"><i class="bi bi-plus-lg me-1"></i>Incluir novo veículo</a>
+          <a class="btn btn-outline-secondary btn-lg" href="/registros">Ver entradas e saídas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/estfrontend.js"></script>
+  <script src="/apps/home/vwHome.js"></script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  <header class="page-header">
+    <p class="page-kicker text-primary fw-semibold mb-2">Cadastro</p>
+    <h1 class="h3 fw-bold mb-2">Formulário de veículos</h1>
+    <p class="text-secondary mb-0">Manipule os dados cadastrais dos veículos.</p>
+  </header>
+
+  <div class="card page-card border-0 shadow-sm">
+    <div class="card-body p-4">
+      <div class="mb-4">
+        <h2 class="h5 fw-semibold mb-1" id="tituloForm">Dados do veículo</h2>
+        <p class="text-secondary mb-0" id="textoForm">A hora de entrada é registrada automaticamente ao inserir o veículo.</p>
+      </div>
+
+      <div id="veiculoAlert" class="alert alert-danger d-none" role="alert"></div>
+
+      <div id="avisoExcluir" class="alert alert-warning d-none" role="alert">
+        <i class="bi bi-info-circle-fill me-1"></i>
+        Use <strong>Excluir</strong> apenas para cadastros feitos por engano: o veículo e suas entradas e saídas
+        deixam de aparecer nas listas. Para a saída normal do carro, use o botão <strong>Saída</strong> na lista de veículos.
+      </div>
+
+      <form id="frmVeiculos" data-servidor-api="{{ servidorApi }}" novalidate>
+        <input type="hidden" id="veiculoid" name="veiculoid" value="0">
+
+        <div class="row g-3">
+          <div class="col-12">
+            <label for="dono" class="form-label">Nome do dono</label>
+            <input type="text" class="form-control" id="dono" name="dono" maxlength="100" placeholder="Nome da pessoa" required>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="placa" class="form-label">Placa</label>
+            <input type="text" class="form-control text-uppercase" id="placa" name="placa" maxlength="8"
+                   placeholder="ABC1D23" autocomplete="off" required>
+            <div class="invalid-feedback"></div>
+            <div class="form-text">Formato ABC1234 ou ABC1D23.</div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="marca" class="form-label">Marca</label>
+            <input type="text" class="form-control" id="marca" name="marca" maxlength="50" placeholder="Ex.: Fiat" required>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="modelo" class="form-label">Modelo do carro</label>
+            <input type="text" class="form-control" id="modelo" name="modelo" maxlength="50" placeholder="Ex.: Argo" required>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+          <button type="button" class="btn btn-primary d-none" id="btnInserirVeiculo">
+            <i class="bi bi-plus-lg me-1"></i>Inserir
+          </button>
+          <button type="button" class="btn btn-warning d-none" id="btnAtualizarVeiculo" disabled>
+            <i class="bi bi-pencil-square me-1"></i>Atualizar
+          </button>
+          <button type="button" class="btn btn-danger d-none" id="btnRemoverVeiculo">
+            <i class="bi bi-trash me-1"></i>Excluir
+          </button>
+          <a class="btn btn-outline-secondary" href="/veiculos" id="btnFecharVeiculo">
+            <i class="bi bi-x-lg me-1"></i>Fechar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/estfrontend.js"></script>
+  <script src="/apps/veiculos/vwFormVeiculos.js"></script>
+{% endblock %}

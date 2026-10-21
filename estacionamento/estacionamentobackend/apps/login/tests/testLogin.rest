@@ -1,0 +1,14 @@
+### teste de login
+POST http://localhost:41000/Login HTTP/1.1
+content-type: application/json
+
+{
+  "username": "qwe",
+  "password": "qwe"
+}
+
+### teste de logout
+POST http://localhost:41000/Logout HTTP/1.1
+content-type: application/json
+
+{}

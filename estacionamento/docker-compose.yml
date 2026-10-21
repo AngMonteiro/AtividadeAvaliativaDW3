@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: estacionamento
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: estacionamento
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Cria as tabelas e os dados iniciais na primeira execução
+      - ./estacionamentobackend/database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d estacionamento"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./estacionamentobackend
+    ports:
+      - "41000:41000"
+    environment:
+      APP_NAME: estacionamento
+      PORT: 41000
+      SECRET_API: troque_esta_chave_secreta_123
+      JWT_EXPIRES: 3600
+      TARIFA_HORA: "8.00"
+      DB_NAME: estacionamento
+      DB_USER: postgres
+      DB_PASS: estacionamento
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./estacionamentofrontend
+    ports:
+      - "41100:41100"
+    environment:
+      PORT: 41100
+      # Endereço do backend visto pelo NAVEGADOR (não pelo container)
+      SERVIDOR_API: http://localhost:41000
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

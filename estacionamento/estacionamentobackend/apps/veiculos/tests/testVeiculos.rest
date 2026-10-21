@@ -1,0 +1,60 @@
+### Necessário para pegar o token
+# @name loginAutenticado
+POST http://localhost:41000/Login HTTP/1.1
+content-type: application/json
+
+{
+  "username": "qwe",
+  "password": "qwe"
+}
+
+### Seta o token
+@accessToken = {{loginAutenticado.response.body.$.token}}
+
+### inserir veículo
+POST http://localhost:41000/insertVeiculo HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "placa": "XYZ9A87",
+  "marca": "Toyota",
+  "modelo": "Corolla",
+  "dono": "Ana Martins"
+}
+
+### placa inválida (deve retornar 400 com erros.placa)
+POST http://localhost:41000/insertVeiculo HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "placa": "AB12345",
+  "marca": "Toyota",
+  "modelo": "Corolla",
+  "dono": "Ana Martins"
+}
+
+### buscar todos os veículos
+GET http://localhost:41000/getAllVeiculos HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+### buscar veículo por ID
+GET http://localhost:41000/getVeiculoByID/1 HTTP/1.1
+Authorization: Bearer {{accessToken}}
+
+### atualizar veículo
+PUT http://localhost:41000/updateVeiculo/1 HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "placa": "ABC1D23",
+  "marca": "Fiat",
+  "modelo": "Argo Drive",
+  "dono": "Maria Souza"
+}
+
+### excluir veículo cadastrado por engano (soft delete do veículo e dos registros)
+DELETE http://localhost:41000/deleteVeiculo/1 HTTP/1.1
+Authorization: Bearer {{accessToken}}

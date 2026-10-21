@@ -1,0 +1,81 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css">
+
+  <header class="page-header">
+    <p class="page-kicker text-primary fw-semibold mb-2">Estacionamento</p>
+    <h1 class="h3 fw-bold mb-2">Formulário de entrada e saída</h1>
+    <p class="text-secondary mb-0">Registre ou corrija a passagem de um veículo pelo estacionamento.</p>
+  </header>
+
+  <div class="card page-card border-0 shadow-sm">
+    <div class="card-body p-4">
+      <div class="mb-4">
+        <h2 class="h5 fw-semibold mb-1" id="tituloForm">Dados da entrada e saída</h2>
+        <p class="text-secondary mb-0">Deixe a saída em branco enquanto o veículo estiver no pátio.</p>
+      </div>
+
+      <div id="registroAlert" class="alert alert-danger d-none" role="alert"></div>
+
+      <div id="avisoExcluirRegistro" class="alert alert-warning d-none" role="alert">
+        <i class="bi bi-info-circle-fill me-1"></i>
+        Use <strong>Excluir</strong> apenas para lançamentos feitos por engano: eles deixam de aparecer em
+        Entradas e saídas. Para a saída normal do carro, use o botão <strong>Saída</strong> na lista.
+      </div>
+
+      <form id="frmRegistros" data-servidor-api="{{ servidorApi }}" novalidate>
+        <input type="hidden" id="registroid" name="registroid" value="0">
+
+        <div class="row g-3">
+          <div class="col-12">
+            <label for="veiculoid" class="form-label">Veículo</label>
+            <select class="form-select" id="veiculoid" name="veiculoid" required>
+              <option value="">Selecione um veículo</option>
+            </select>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="horaentrada" class="form-label">Entrada</label>
+            <input type="datetime-local" class="form-control" id="horaentrada" name="horaentrada" required>
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="horasaida" class="form-label">Saída</label>
+            <input type="datetime-local" class="form-control" id="horasaida" name="horasaida">
+            <div class="invalid-feedback"></div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <label for="valor" class="form-label">Valor (R$)</label>
+            <input type="number" class="form-control" id="valor" name="valor" min="0" step="0.01" placeholder="0,00">
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+          <button type="button" class="btn btn-primary d-none" id="btnInserirRegistro">
+            <i class="bi bi-plus-lg me-1"></i>Inserir
+          </button>
+          <button type="button" class="btn btn-warning d-none" id="btnAtualizarRegistro" disabled>
+            <i class="bi bi-pencil-square me-1"></i>Atualizar
+          </button>
+          <button type="button" class="btn btn-danger d-none" id="btnRemoverRegistro">
+            <i class="bi bi-trash me-1"></i>Excluir
+          </button>
+          <a class="btn btn-outline-secondary" href="/registros" id="btnFecharRegistro">
+            <i class="bi bi-x-lg me-1"></i>Fechar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/estfrontend.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="/apps/registros/vwFormRegistros.js"></script>
+{% endblock %}
