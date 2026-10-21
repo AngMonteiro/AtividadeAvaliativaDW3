@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS registros (
 CREATE UNIQUE INDEX IF NOT EXISTS uq_registros_aberto
   ON registros (veiculoid) WHERE horasaida IS NULL AND removido = false;
 
--- Usuário padrão: admin / admin123
+-- Usuário padrão: angelo / angelo
 INSERT INTO usuarios (username, password)
-VALUES ('admin', crypt('admin123', gen_salt('bf')))
+VALUES ('angelo', crypt('angelo', gen_salt('bf')))
 ON CONFLICT (username) DO NOTHING;
 
 -- Dados de exemplo

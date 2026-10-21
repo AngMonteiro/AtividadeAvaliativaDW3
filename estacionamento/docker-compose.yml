@@ -24,7 +24,7 @@ services:
     environment:
       APP_NAME: estacionamento
       PORT: 41000
-      SECRET_API: troque_esta_chave_secreta_123
+      SECRET_API: ANGKWAM
       JWT_EXPIRES: 3600
       TARIFA_HORA: "8.00"
       DB_NAME: estacionamento
